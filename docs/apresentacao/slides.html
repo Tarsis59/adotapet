@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>AdotaPet — Apresentação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --creme: #fdf6ef;
+    --creme-2: #f7e9dc;
+    --areia: #efd9c4;
+    --terracota: #9a4a00;
+    --terracota-2: #c2620f;
+    --terracota-claro: #f6dcc3;
+    --cafe: #3b2416;
+    --texto: #4a3426;
+    --texto-suave: #634a3c;
+    --verde: #1e7e4a;
+    --verde-bg: #e3f5e9;
+    --ambar: #a05a00;
+    --ambar-bg: #fdf0dc;
+    --anil: #4a4ab0;
+    --anil-bg: #e9e9fb;
+    --sombra: 0 2px 4px rgba(60,35,10,.06), 0 18px 48px rgba(60,35,10,.14);
+  }
+  @page { size: 1920px 1080px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #2a1a10; }
+  body { font-family: 'Figtree', system-ui, sans-serif; color: var(--texto); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .slide {
+    width: 1920px; height: 1080px; position: relative; overflow: hidden;
+    background: var(--creme); margin: 0 auto 40px; page-break-after: always; break-after: page;
+    padding: 110px 140px;
+    display: flex; flex-direction: column;
+  }
+  @media print { .slide { margin: 0; } html, body { background: var(--creme); } }
+
+  /* Elementos decorativos */
+  .slide::after {
+    content: ''; position: absolute; right: -180px; bottom: -220px; width: 620px; height: 620px;
+    border-radius: 50%; background: radial-gradient(circle, rgba(194,98,15,.10), transparent 70%);
+    pointer-events: none;
+  }
+  .rodape {
+    position: absolute; left: 140px; right: 140px; bottom: 54px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 22px; color: var(--texto-suave); font-weight: 500;
+  }
+  .rodape .marca { font-family: 'Gloock', serif; color: var(--terracota); font-size: 26px; }
+  .rodape .num { font-variant-numeric: tabular-nums; }
+
+  .rotulo {
+    display: inline-flex; align-items: center; gap: 14px; align-self: flex-start;
+    font-size: 22px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--terracota);
+    margin-bottom: 26px;
+  }
+  .rotulo::before { content: ''; width: 46px; height: 4px; border-radius: 4px; background: var(--terracota-2); }
+  h1, h2 { font-family: 'Gloock', serif; font-weight: 400; color: var(--cafe); letter-spacing: -.01em; }
+  h2 { font-size: 84px; line-height: 1.04; margin-bottom: 26px; }
+  .lead { font-size: 34px; line-height: 1.45; color: var(--texto); max-width: 1400px; }
+  .lead strong { color: var(--terracota); font-weight: 700; }
+
+  /* Capa */
+  .capa { padding: 0; flex-direction: row; background: var(--creme); }
+  .capa .esq {
+    width: 52%; padding: 120px 110px 110px 140px; display: flex; flex-direction: column; justify-content: center;
+    background: linear-gradient(155deg, #a24f06 0%, #8a3f00 55%, #6e3200 100%); color: #fff; position: relative;
+  }
+  .capa .esq .patas { position: absolute; inset: 0; opacity: .09; font-size: 120px; line-height: 1.6; letter-spacing: 60px; padding: 30px; word-break: break-all; overflow: hidden; }
+  .capa .logo { display: flex; align-items: center; gap: 22px; font-family: 'Gloock', serif; font-size: 44px; margin-bottom: 44px; position: relative; }
+  .capa .logo span.pata { width: 84px; height: 84px; border-radius: 26px; background: rgba(255,255,255,.16); display: grid; place-items: center; font-size: 46px; }
+  .capa .logo span.pata i { font-style: normal; filter: grayscale(1) brightness(3.2); }
+  .capa h1 { color: #fff; font-size: 100px; line-height: 1.02; margin-bottom: 30px; position: relative; }
+  .capa .sub { font-size: 36px; line-height: 1.4; color: #fff1e4; max-width: 820px; position: relative; }
+  .capa .tags { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 44px; position: relative; }
+  .capa .tags span { padding: 12px 24px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25); font-size: 24px; font-weight: 600; }
+  .capa .dir { flex: 1; padding: 120px 130px 110px 100px; display: flex; flex-direction: column; justify-content: center; }
+  .capa .dir .rotulo { margin-bottom: 30px; }
+  .equipe { list-style: none; display: flex; flex-direction: column; gap: 22px; }
+  .equipe li { display: flex; align-items: center; gap: 24px; padding: 20px 26px; background: #fff; border-radius: 22px; box-shadow: 0 1px 2px rgba(60,35,10,.05), 0 8px 24px rgba(60,35,10,.07); }
+  .equipe .av { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 24px; color: var(--terracota); background: var(--terracota-claro); flex-shrink: 0; }
+  .equipe .nome { font-size: 28px; font-weight: 700; color: var(--cafe); }
+  .equipe .mat { font-size: 22px; color: var(--texto-suave); font-variant-numeric: tabular-nums; }
+  .capa .disciplina { margin-top: 40px; font-size: 24px; color: var(--texto-suave); line-height: 1.5; }
+
+  /* Grades e cards */
+  .grade { display: grid; gap: 30px; margin-top: 46px; }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+  .card { background: #fff; border-radius: 28px; padding: 40px 40px 42px; box-shadow: 0 1px 2px rgba(60,35,10,.05), 0 12px 32px rgba(60,35,10,.08); }
+  .card .ic { width: 76px; height: 76px; border-radius: 22px; display: grid; place-items: center; font-size: 40px; background: var(--terracota-claro); margin-bottom: 26px; }
+  .card h3 { font-size: 34px; color: var(--cafe); margin-bottom: 14px; font-weight: 700; }
+  .card p, .card li { font-size: 26px; line-height: 1.5; color: var(--texto); }
+  .card ul { padding-left: 28px; }
+  .card li + li { margin-top: 8px; }
+  .verde .ic { background: var(--verde-bg); } .ambar .ic { background: var(--ambar-bg); } .anil .ic { background: var(--anil-bg); }
+
+  .citacao { margin-top: 54px; padding: 40px 50px; border-left: 8px solid var(--terracota-2); background: var(--creme-2); border-radius: 0 26px 26px 0; font-family: 'Gloock', serif; font-size: 44px; line-height: 1.3; color: var(--cafe); max-width: 1500px; }
+
+  /* Diagrama de arquitetura */
+  .arq { display: flex; align-items: stretch; gap: 0; margin-top: 70px; }
+  .camada { flex: 1; background: #fff; border-radius: 30px; padding: 40px 38px; box-shadow: var(--sombra); position: relative; }
+  .camada .tit { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; }
+  .camada .tit span { font-size: 46px; }
+  .camada h3 { font-size: 38px; color: var(--cafe); font-weight: 800; }
+  .camada .tec { font-size: 22px; font-weight: 700; color: var(--terracota); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 18px; }
+  .camada ul { list-style: none; }
+  .camada li { font-size: 25px; line-height: 1.45; padding: 9px 0; border-bottom: 1px dashed var(--areia); }
+  .camada li:last-child { border-bottom: 0; }
+  .seta { width: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--terracota); text-align: center; }
+  .seta .linha { width: 100%; height: 6px; background: linear-gradient(90deg, var(--terracota-2), var(--terracota)); border-radius: 6px; position: relative; }
+  .seta .linha::after { content: ''; position: absolute; right: -4px; top: -10px; border-left: 22px solid var(--terracota); border-top: 13px solid transparent; border-bottom: 13px solid transparent; }
+  .seta small { font-size: 20px; font-weight: 700; line-height: 1.3; }
+
+  /* Fluxo JWT */
+  .fluxo { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 60px; counter-reset: passo; }
+  .passo { background: #fff; border-radius: 26px; padding: 34px 30px 36px; box-shadow: 0 1px 2px rgba(60,35,10,.05), 0 12px 32px rgba(60,35,10,.08); position: relative; }
+  .passo::before { counter-increment: passo; content: counter(passo); position: absolute; top: -26px; left: 30px; width: 56px; height: 56px; border-radius: 50%; background: var(--terracota); color: #fff; font-weight: 800; font-size: 28px; display: grid; place-items: center; box-shadow: 0 2px 6px rgba(40,20,5,.18); }
+  .passo h3 { margin-top: 22px; font-size: 29px; color: var(--cafe); margin-bottom: 12px; }
+  .passo p { font-size: 23px; line-height: 1.45; }
+  code, .mono { font-family: 'JetBrains Mono', monospace; font-size: .86em; background: var(--creme-2); padding: 2px 10px; border-radius: 8px; color: var(--terracota); }
+  .erros { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 50px; }
+  .erros span { font-size: 24px; padding: 14px 24px; border-radius: 16px; background: #fff; box-shadow: 0 1px 2px rgba(60,35,10,.06), 0 6px 18px rgba(60,35,10,.07); }
+  .erros b { color: #b3261e; margin-right: 10px; font-family: 'JetBrains Mono', monospace; }
+
+  /* Código */
+  .codigo { background: #2a1a10; color: #f8e9da; border-radius: 26px; padding: 36px 42px; font-family: 'JetBrains Mono', monospace; font-size: 22px; line-height: 1.6; box-shadow: var(--sombra); white-space: pre; }
+  .codigo .k { color: #ffb470; } .codigo .a { color: #9fd6a8; } .codigo .s { color: #ffd98a; } .codigo .c { color: #b19682; }
+
+  /* Telas */
+  .tela-wrap { display: flex; gap: 70px; align-items: center; margin-top: 10px; flex: 1; }
+  .tela-wrap .texto { width: 560px; flex-shrink: 0; }
+  .tela-wrap .texto h2 { font-size: 72px; }
+  .tela-wrap .texto ul { list-style: none; margin-top: 26px; }
+  .tela-wrap .texto li { font-size: 27px; line-height: 1.45; padding: 12px 0 12px 48px; position: relative; }
+  .tela-wrap .texto li::before { content: '✓'; position: absolute; left: 0; top: 12px; width: 32px; height: 32px; border-radius: 50%; background: var(--verde-bg); color: var(--verde); font-weight: 800; font-size: 19px; display: grid; place-items: center; }
+  .navegador { flex: 1; border-radius: 22px; overflow: hidden; background: #fff; box-shadow: 0 2px 4px rgba(60,35,10,.08), 0 30px 70px rgba(60,35,10,.22); border: 1px solid #ead8c6; }
+  .navegador .barra { height: 46px; background: #f3e4d6; display: flex; align-items: center; gap: 10px; padding: 0 20px; }
+  .navegador .barra i { width: 14px; height: 14px; border-radius: 50%; background: #e0b89a; display: block; }
+  .navegador .barra .url { margin-left: 18px; flex: 1; height: 28px; border-radius: 8px; background: #fff8f1; font-size: 16px; color: var(--texto-suave); display: flex; align-items: center; padding-left: 14px; font-family: 'JetBrains Mono', monospace; }
+  .navegador img { display: block; width: 100%; }
+  .duas-telas { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .duas-telas figcaption { margin-top: 18px; font-size: 24px; font-weight: 700; color: var(--cafe); text-align: center; }
+
+  .celulares { flex: 1; display: flex; gap: 46px; justify-content: center; align-items: flex-start; }
+  .celular { width: 300px; border-radius: 46px; padding: 14px; background: #2a1a10; box-shadow: var(--sombra); }
+  .celular img { width: 100%; border-radius: 34px; display: block; height: 600px; object-fit: cover; object-position: top; }
+
+  /* Checklist */
+  .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 50px; margin-top: 40px; }
+  .checklist div { display: flex; gap: 20px; align-items: flex-start; font-size: 25px; line-height: 1.35; padding: 14px 0; border-bottom: 1px solid var(--areia); }
+  .checklist div::before { content: '✓'; flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--verde); color: #fff; font-weight: 800; font-size: 19px; display: grid; place-items: center; margin-top: 1px; }
+  .checklist small { display: block; font-size: 20px; color: var(--texto-suave); margin-top: 4px; }
+
+  .numeros { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 56px; }
+  .numero { background: #fff; border-radius: 28px; padding: 40px 36px; box-shadow: 0 1px 2px rgba(60,35,10,.05), 0 12px 32px rgba(60,35,10,.08); }
+  .numero b { display: block; font-family: 'Gloock', serif; font-size: 96px; color: var(--terracota); line-height: 1; font-weight: 400; }
+  .numero span { display: block; margin-top: 14px; font-size: 25px; line-height: 1.4; }
+
+  .divisao { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 56px; }
+  .membro { background: #fff; border-radius: 28px; padding: 38px 30px; box-shadow: 0 1px 2px rgba(60,35,10,.05), 0 12px 32px rgba(60,35,10,.08); text-align: center; }
+  .membro .av { width: 104px; height: 104px; border-radius: 50%; margin: 0 auto 22px; display: grid; place-items: center; font-weight: 800; font-size: 38px; color: #fff; background: linear-gradient(140deg, var(--terracota-2), var(--terracota)); }
+  .membro h3 { font-size: 27px; color: var(--cafe); line-height: 1.25; min-height: 68px; }
+  .membro .mat { font-size: 21px; color: var(--texto-suave); margin: 6px 0 18px; }
+  .membro p { font-size: 22px; line-height: 1.45; }
+  .membro .gh { margin-top: 16px; font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--terracota); }
+
+  .final { background: linear-gradient(155deg, #a24f06 0%, #8a3f00 55%, #6e3200 100%); color: #fff; justify-content: center; align-items: flex-start; }
+  .final h2 { color: #fff; font-size: 150px; }
+  .final .lead { color: #ffe7d1; }
+  .final .rodape { color: #ffe9d6; } .final .rodape .marca { color: #fff; }
+  .final .links { margin-top: 60px; display: flex; flex-direction: column; gap: 20px; }
+  .final .links div { font-size: 30px; display: flex; gap: 20px; align-items: center; }
+  .final .links b { min-width: 230px; color: #ffe9d6; font-weight: 600; }
+  .final .links span { font-family: 'JetBrains Mono', monospace; font-size: 28px; background: rgba(255,255,255,.12); padding: 8px 20px; border-radius: 12px; }
+</style>
+</head>
+<body>
+
+<!-- 1. Capa -->
+<section class="slide capa">
+  <div class="esq">
+    <div class="patas" aria-hidden="true">🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾</div>
+    <div class="logo"><span class="pata"><i>🐾</i></span>AdotaPet</div>
+    <h1>Lares que esperam, histórias que começam aqui.</h1>
+    <p class="sub">MVP web full stack para ONGs e abrigos gerenciarem os animais disponíveis para adoção.</p>
+    <div class="tags"><span>Angular 22</span><span>Spring Boot 4</span><span>JWT</span><span>PostgreSQL</span></div>
+  </div>
+  <div class="dir">
+    <div class="rotulo">Equipe</div>
+    <ul class="equipe">
+      <li><span class="av">TB</span><div><div class="nome">Társis Carvalho Barreto</div><div class="mat">Matrícula 202220038</div></div></li>
+      <li><span class="av">YB</span><div><div class="nome">Ylo Silva de Sá Bittencourt</div><div class="mat">Matrícula 202220039</div></div></li>
+      <li><span class="av">GF</span><div><div class="nome">Guilherme Crocamo Freire</div><div class="mat">Matrícula 202220448</div></div></li>
+      <li><span class="av">SS</span><div><div class="nome">Samuel Ferreira Santos</div><div class="mat">Matrícula 202410518</div></div></li>
+      <li><span class="av">JO</span><div><div class="nome">João Pedro França Chaves Oliveira</div><div class="mat">Matrícula 202320100</div></div></li>
+    </ul>
+    <p class="disciplina">Desenvolvimento de um MVP web full stack — Parte 1</p>
+  </div>
+</section>
+
+<!-- 2. Problema -->
+<section class="slide">
+  <div class="rotulo">O problema</div>
+  <h2>Adoção responsável não cabe<br>em uma planilha.</h2>
+  <p class="lead">ONGs e protetores independentes controlam os animais em <strong>planilhas, cadernos e grupos de mensagens</strong>. O resultado é previsível:</p>
+  <div class="grade g3">
+    <div class="card ambar"><div class="ic">📋</div><h3>Informação espalhada</h3><p>Dados de saúde, idade e porte ficam em lugares diferentes e se perdem com a troca de voluntários.</p></div>
+    <div class="card"><div class="ic">📣</div><h3>Divulgação desatualizada</h3><p>Animais já adotados continuam sendo anunciados, gerando retrabalho e frustração de quem quer adotar.</p></div>
+    <div class="card anil"><div class="ic">🕓</div><h3>Sem histórico</h3><p>Não há registro confiável de quando cada animal entrou, mudou de status ou foi adotado.</p></div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">02</span></footer>
+</section>
+
+<!-- 3. Público e proposta -->
+<section class="slide">
+  <div class="rotulo">Público-alvo e proposta</div>
+  <h2>Feito para quem cuida.</h2>
+  <div class="grade g2" style="margin-top:30px">
+    <div class="card"><div class="ic">🏠</div><h3>Quem usa</h3>
+      <ul><li>Voluntários de ONGs de proteção animal</li><li>Administradores de abrigos e lares temporários</li><li>Protetores independentes que acompanham vários resgates</li></ul></div>
+    <div class="card verde"><div class="ic">💚</div><h3>O que o AdotaPet entrega</h3>
+      <ul><li>Um cadastro único e seguro de cada animal</li><li>Status de adoção sempre atualizado: disponível, em processo ou adotado</li><li>Busca e filtros para encontrar rápido quem está disponível</li><li>Acesso restrito a usuários autenticados</li></ul></div>
+  </div>
+  <div class="citacao">“Cada adoção começa com um cadastro bem feito.”</div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">03</span></footer>
+</section>
+
+<!-- 4. Funcionalidades -->
+<section class="slide">
+  <div class="rotulo">Funcionalidades</div>
+  <h2>Do login à adoção, tudo em um lugar.</h2>
+  <div class="grade g4">
+    <div class="card"><div class="ic">🔐</div><h3>Acesso seguro</h3><p>Login validado no backend com JWT, cadastro de voluntário, rotas protegidas e botão Sair.</p></div>
+    <div class="card verde"><div class="ic">📊</div><h3>Listagem</h3><p>Indicadores por status, busca por nome ou raça, filtros por espécie e status e paginação.</p></div>
+    <div class="card ambar"><div class="ic">📝</div><h3>Cadastro e edição</h3><p>Formulários validados com mensagens claras, inclusive os erros devolvidos pela API.</p></div>
+    <div class="card anil"><div class="ic">🔎</div><h3>Detalhes e exclusão</h3><p>Ficha completa do animal e exclusão sempre com diálogo de confirmação.</p></div>
+  </div>
+  <div class="erros">
+    <span>✅ Mensagens de sucesso e falha em todas as operações</span>
+    <span>📱 Interface responsiva e acessível</span>
+    <span>⏱️ Sessão encerrada automaticamente quando o token expira</span>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">04</span></footer>
+</section>
+
+<!-- 5. Arquitetura -->
+<section class="slide">
+  <div class="rotulo">Arquitetura</div>
+  <h2>Três camadas, responsabilidades claras.</h2>
+  <div class="arq">
+    <div class="camada"><div class="tit"><span>🅰️</span><h3>Frontend</h3></div><div class="tec">Angular 22 · Material</div>
+      <ul><li>Angular Router + lazy loading</li><li>Serviços HTTP (Auth, Animal)</li><li>Interceptor JWT</li><li>Guards de rota</li><li>Reactive Forms + signals</li></ul></div>
+    <div class="seta"><small>HTTP · JSON<br>Bearer JWT</small><div class="linha"></div></div>
+    <div class="camada"><div class="tit"><span>🍃</span><h3>Backend</h3></div><div class="tec">Spring Boot 4 · Java 21</div>
+      <ul><li>Controllers REST</li><li>Services (regras de negócio)</li><li>Repositories (Spring Data JPA)</li><li>DTOs + Bean Validation</li><li>Spring Security + JWT + BCrypt</li></ul></div>
+    <div class="seta"><small>JPA<br>Hibernate</small><div class="linha"></div></div>
+    <div class="camada"><div class="tit"><span>🐘</span><h3>Banco</h3></div><div class="tec">PostgreSQL 17</div>
+      <ul><li>Tabela <code>usuarios</code></li><li>Tabela <code>animais</code></li><li>Volume Docker persistente</li><li>Alternativa: H2 em arquivo</li></ul></div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">05</span></footer>
+</section>
+
+<!-- 6. Backend -->
+<section class="slide">
+  <div class="rotulo">Backend · API REST</div>
+  <h2>CRUD completo da entidade Animal.</h2>
+  <div class="grade g2" style="grid-template-columns: 1.05fr .95fr; align-items:start; margin-top:30px">
+    <div class="codigo"><span class="c">// AnimalController.java</span>
+<span class="a">@PostMapping</span>
+<span class="k">public</span> ResponseEntity&lt;AnimalResponse&gt; criar(
+        <span class="a">@Valid @RequestBody</span> AnimalRequest request) {
+    AnimalResponse criado = animalService.criar(request);
+    URI localizacao = ServletUriComponentsBuilder
+        .fromCurrentRequest().path(<span class="s">"/{id}"</span>)
+        .buildAndExpand(criado.id()).toUri();
+    <span class="k">return</span> ResponseEntity.created(localizacao).body(criado);
+}
+
+<span class="c">// AnimalRequest.java (DTO de entrada)</span>
+<span class="a">@NotBlank</span>(message = <span class="s">"O nome é obrigatório."</span>)
+<span class="a">@Size</span>(min = 2, max = 60) String nome,</div>
+    <div>
+      <div class="card" style="padding:34px 38px">
+        <h3>Endpoints</h3>
+        <p><code>POST</code> /api/animais → <b>201</b> + Location</p>
+        <p><code>GET</code> /api/animais → <b>200</b> paginado</p>
+        <p><code>GET</code> /api/animais/{id} → <b>200</b> · <b>404</b></p>
+        <p><code>PUT</code> /api/animais/{id} → <b>200</b> · <b>404</b></p>
+        <p><code>DELETE</code> /api/animais/{id} → <b>204</b> · <b>404</b></p>
+      </div>
+      <div class="card verde" style="padding:34px 38px; margin-top:26px">
+        <h3>Erros padronizados</h3>
+        <p><b>400</b> com a lista de campos inválidos, <b>401</b>, <b>404</b> e <b>409</b>, sempre em JSON pelo <code>GlobalExceptionHandler</code>.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">06</span></footer>
+</section>
+
+<!-- 7. JWT -->
+<section class="slide">
+  <div class="rotulo">Segurança</div>
+  <h2>Autenticação com Spring Security + JWT.</h2>
+  <div class="fluxo">
+    <div class="passo"><h3>Login</h3><p>O usuário informa e-mail e senha na página de login do Angular.</p></div>
+    <div class="passo"><h3>Validação</h3><p>A API compara a senha com o <b>hash BCrypt</b> salvo no banco.</p></div>
+    <div class="passo"><h3>Token</h3><p>Devolve um <b>JWT assinado</b> com expiração de 2 horas. A senha nunca volta na resposta.</p></div>
+    <div class="passo"><h3>Bearer</h3><p>O interceptor envia <code>Authorization: Bearer</code> em cada requisição.</p></div>
+    <div class="passo"><h3>Filtro</h3><p>O <code>JwtAuthenticationFilter</code> valida assinatura e expiração antes de liberar o recurso.</p></div>
+  </div>
+  <div class="erros">
+    <span><b>401</b>E-mail ou senha inválidos.</span>
+    <span><b>401</b>Autenticação necessária.</span>
+    <span><b>401</b>Token inválido.</span>
+    <span><b>401</b>Token expirado. Faça login novamente.</span>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">07</span></footer>
+</section>
+
+<!-- 8. Login -->
+<section class="slide">
+  <div class="tela-wrap">
+    <div class="texto">
+      <div class="rotulo">Tela · Login</div>
+      <h2>Entrar de verdade, no backend.</h2>
+      <ul><li>Validação de e-mail e senha</li><li>Erro de credenciais vindo da API</li><li>Aviso quando a sessão expira</li><li>Rotas protegidas redirecionam para cá</li></ul>
+    </div>
+    <div class="navegador"><div class="barra"><i></i><i></i><i></i><div class="url">localhost:4200/login</div></div><img src="img/login.png" alt="Tela de login"></div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">08</span></footer>
+</section>
+
+<!-- 9. Listagem -->
+<section class="slide">
+  <div class="tela-wrap">
+    <div class="texto">
+      <div class="rotulo">Tela · Listagem</div>
+      <h2>Tudo à vista.</h2>
+      <ul><li>Indicadores por status</li><li>Busca e filtros combinados</li><li>Paginação feita no servidor</li><li>Ver, editar e excluir em cada linha</li></ul>
+    </div>
+    <div class="navegador"><div class="barra"><i></i><i></i><i></i><div class="url">localhost:4200/animais</div></div><img src="img/listagem.png" alt="Listagem de animais"></div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">09</span></footer>
+</section>
+
+<!-- 10. Cadastro -->
+<section class="slide">
+  <div class="tela-wrap">
+    <div class="texto">
+      <div class="rotulo">Tela · Cadastro</div>
+      <h2>Validação que orienta.</h2>
+      <ul><li>Mensagens claras em cada campo</li><li>Regras iguais no Angular e na API</li><li>Pré-visualização da foto</li><li>Mensagem de sucesso ao salvar</li></ul>
+    </div>
+    <div class="navegador"><div class="barra"><i></i><i></i><i></i><div class="url">localhost:4200/animais/novo</div></div><img src="img/cadastro.png" alt="Cadastro com validação"></div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">10</span></footer>
+</section>
+
+<!-- 11. Detalhes e edição -->
+<section class="slide">
+  <div class="rotulo">Telas · Detalhes e Edição</div>
+  <h2 style="font-size:72px">Ficha completa e edição em um clique.</h2>
+  <div class="duas-telas">
+    <figure><div class="navegador"><div class="barra"><i></i><i></i><i></i><div class="url">/animais/9</div></div><img src="img/detalhes.png" alt="Detalhes do animal"></div><figcaption>Detalhes</figcaption></figure>
+    <figure><div class="navegador"><div class="barra"><i></i><i></i><i></i><div class="url">/animais/9/editar</div></div><img src="img/edicao.png" alt="Edição do animal"></div><figcaption>Edição</figcaption></figure>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">11</span></footer>
+</section>
+
+<!-- 12. Exclusão + mobile -->
+<section class="slide">
+  <div class="tela-wrap">
+    <div class="texto">
+      <div class="rotulo">Exclusão e responsividade</div>
+      <h2>Seguro e em qualquer tela.</h2>
+      <ul><li>Diálogo de confirmação antes de excluir</li><li>Mensagem de sucesso ou falha</li><li>Layout adaptado para celular</li><li>Tabela vira cards no mobile</li></ul>
+    </div>
+    <div class="celulares">
+      <div class="celular"><img src="img/exclusao-mobile.png" alt="Confirmação de exclusão no celular"></div>
+      <div class="celular"><img src="img/listagem-mobile.png" alt="Listagem no celular"></div>
+      <div class="celular"><img src="img/login-mobile.png" alt="Login no celular"></div>
+    </div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">12</span></footer>
+</section>
+
+<!-- 13. Requisitos -->
+<section class="slide">
+  <div class="rotulo">Requisitos do enunciado</div>
+  <h2 style="font-size:72px">Tudo o que foi pedido, entregue.</h2>
+  <div class="checklist">
+    <div>4 páginas + login, com Angular Router<small>Listagem, Cadastro, Detalhes e Edição</small></div>
+    <div>CRUD completo da entidade Animal<small>POST, GET, GET por id, PUT e DELETE</small></div>
+    <div>Login autenticado no backend<small>Nada simulado no frontend</small></div>
+    <div>Controllers, services e repositories<small>Camadas separadas, com DTOs na entrada e na saída</small></div>
+    <div>Validação e mensagens compreensíveis<small>No Angular e na API, com erros 400 mapeados por campo</small></div>
+    <div>Códigos HTTP adequados<small>200, 201, 204, 400, 401, 404 e 409</small></div>
+    <div>Confirmação antes de excluir<small>Diálogo do Angular Material</small></div>
+    <div>Spring Data JPA + banco relacional<small>Dados persistem após reiniciar</small></div>
+    <div>Rotas protegidas e opção de sair<small>authGuard e botão Sair</small></div>
+    <div>JWT com expiração + Bearer<small>Token inválido ou expirado tratado nos dois lados</small></div>
+    <div>Mensagens de sucesso e falha<small>Snackbars em todas as operações</small></div>
+    <div>Senhas com BCrypt<small>Nunca devolvidas pela API</small></div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">13</span></footer>
+</section>
+
+<!-- 14. Qualidade -->
+<section class="slide">
+  <div class="rotulo">Qualidade</div>
+  <h2>Testado de ponta a ponta.</h2>
+  <div class="numeros">
+    <div class="numero"><b>28</b><span>testes no backend (unitários e de integração com MockMvc)</span></div>
+    <div class="numero"><b>9</b><span>endpoints REST documentados no Swagger</span></div>
+    <div class="numero"><b>6</b><span>páginas no Angular, todas responsivas</span></div>
+    <div class="numero"><b>0</b><span>senhas expostas: hash BCrypt e DTOs sem senha</span></div>
+  </div>
+  <div class="grade g3" style="margin-top:40px">
+    <div class="card"><h3>Testes automatizados</h3><p>Login, token inválido e expirado, CRUD completo, 400, 404 e 409, além dos serviços e guards do Angular.</p></div>
+    <div class="card verde"><h3>Persistência validada</h3><p>Backend reiniciado e dados mantidos no PostgreSQL, também no perfil H2 em arquivo.</p></div>
+    <div class="card ambar"><h3>Fácil de rodar</h3><p><code>docker compose up -d</code>, <code>mvnw spring-boot:run</code> e <code>npm start</code>.</p></div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">14</span></footer>
+</section>
+
+<!-- 15. Equipe -->
+<section class="slide">
+  <div class="rotulo">Equipe</div>
+  <h2>Quem construiu o AdotaPet.</h2>
+  <div class="divisao">
+    <div class="membro"><div class="av">TB</div><h3>Társis Carvalho Barreto</h3><div class="mat">202220038</div><p>Infraestrutura, integração e autenticação no frontend</p><div class="gh">@Tarsis59</div></div>
+    <div class="membro"><div class="av">YB</div><h3>Ylo Silva de Sá Bittencourt</h3><div class="mat">202220039</div><p>Segurança: Spring Security, JWT e BCrypt</p><div class="gh">@YloBittencourt</div></div>
+    <div class="membro"><div class="av">GF</div><h3>Guilherme Crocamo Freire</h3><div class="mat">202220448</div><p>Entidades, CRUD, DTOs, validação e erros</p><div class="gh">@gcrocamo</div></div>
+    <div class="membro"><div class="av">SS</div><h3>Samuel Ferreira Santos</h3><div class="mat">202410518</div><p>Listagem, detalhes e exclusão no Angular</p><div class="gh">@SamuelFerrc</div></div>
+    <div class="membro"><div class="av">JO</div><h3>João Pedro França Chaves Oliveira</h3><div class="mat">202320100</div><p>Cadastro, edição e formulários no Angular</p><div class="gh">@joao-pedro-franca</div></div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">15</span></footer>
+</section>
+
+<!-- 16. Encerramento -->
+<section class="slide final">
+  <div class="rotulo" style="color:#ffd7b5">Demonstração</div>
+  <h2>Obrigado!</h2>
+  <p class="lead">Agora, a demonstração ao vivo: login, navegação pelas páginas e todas as operações do CRUD.</p>
+  <div class="links">
+    <div><b>Repositório</b><span>github.com/Tarsis59/adotapet</span></div>
+    <div><b>Aplicação</b><span>localhost:4200</span></div>
+    <div><b>API · Swagger</b><span>localhost:8080/swagger-ui.html</span></div>
+    <div><b>Login demo</b><span>admin@adotapet.com · Admin@123</span></div>
+  </div>
+  <footer class="rodape"><span class="marca">🐾 AdotaPet</span><span class="num">16</span></footer>
+</section>
+
+</body>
+</html>
