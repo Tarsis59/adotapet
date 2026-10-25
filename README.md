@@ -115,7 +115,7 @@ cd frontend
 npm install
 npm start
 ```
-Acesse **http://localhost:4200**.
+Acesse **http://localhost:4200**. Em desenvolvimento o Angular chama `/api` e o proxy do `ng serve` ([`proxy.conf.mjs`](frontend/proxy.conf.mjs)) repassa as chamadas para o backend na porta 8080.
 
 ### 🔑 Credenciais de demonstração
 | Perfil | E-mail | Senha |
@@ -141,6 +141,32 @@ cd frontend && npm test -- --watch=false   # testes de AuthService, guard, inter
 | `JWT_SECRET` | chave de desenvolvimento | Segredo de assinatura do JWT (**defina em produção**, mínimo de 64 caracteres) |
 | `CORS_ORIGEM` | `http://localhost:4200` | Origem permitida para o frontend |
 | `DB_PORT` (docker compose) | `5434` | Porta do PostgreSQL no host |
+| `API_PORT` (frontend) | `8080` | Porta do backend usada pelo proxy do `npm start` |
+
+### 🛠️ Problemas comuns
+
+**A porta 8080 já está em uso.** Suba o backend em outra porta e informe essa porta ao frontend:
+```powershell
+# Terminal do backend
+cd backend
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.arguments=--server.port=8081"
+
+# Terminal do frontend (PowerShell)
+cd frontend
+$env:API_PORT = "8081"; npm start
+```
+No Prompt de Comando (cmd) use `set API_PORT=8081 && npm start`; no Linux/macOS, `API_PORT=8081 npm start`. O Swagger passa a ficar em `http://localhost:8081/swagger-ui.html`.
+
+**A porta 5434 do PostgreSQL já está em uso.** Escolha outra porta para o container e para o backend:
+```powershell
+$env:DB_PORT = "5440"; docker compose up -d
+$env:DB_URL = "jdbc:postgresql://localhost:5440/adotapet"; .\mvnw.cmd spring-boot:run
+```
+
+**Erro `PKIX path building failed` ao rodar o `mvnw`.** Acontece quando um antivírus inspeciona conexões HTTPS (Avast, AVG, Kaspersky, ESET...) e o Java não confia no certificado dele. A correção é fazer o Java usar o repositório de certificados do Windows, que já confia no antivírus. Rode uma vez e abra um terminal novo:
+```powershell
+setx MAVEN_OPTS "-Djavax.net.ssl.trustStoreType=Windows-ROOT"
+```
 
 ---
 

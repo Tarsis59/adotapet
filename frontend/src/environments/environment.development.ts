@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api',
+  // Em desenvolvimento as chamadas passam pelo proxy do `ng serve` (proxy.conf.mjs).
+  apiUrl: '/api',
 };

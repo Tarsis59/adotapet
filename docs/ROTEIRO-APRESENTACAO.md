@@ -70,7 +70,9 @@ mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=h2
 ```
 Usa o banco H2 salvo em arquivo (`backend/data/`). Funciona igual e também mantém os dados após reiniciar.
 
-> **Se a porta 8080 estiver ocupada:** feche o programa que a usa ou rode o backend com `--server.port=8081` e ajuste `frontend/src/environments/environment.development.ts` para `http://localhost:8081/api`.
+> **Se a porta 8080 estiver ocupada:** suba o backend com `mvnw.cmd spring-boot:run "-Dspring-boot.run.arguments=--server.port=8081"` e o frontend com `$env:API_PORT = "8081"; npm start` (PowerShell) ou `set API_PORT=8081 && npm start` (cmd). O Swagger fica em `http://localhost:8081/swagger-ui.html`.
+>
+> **Se o `mvnw` der erro `PKIX path building failed`:** é o antivírus (ex.: Avast) inspecionando HTTPS. Rode uma vez `setx MAVEN_OPTS "-Djavax.net.ssl.trustStoreType=Windows-ROOT"`, feche e abra o terminal, e rode o `mvnw` de novo. No computador do Társis isso já está configurado.
 
 ---
 
@@ -179,7 +181,7 @@ Usa o banco H2 salvo em arquivo (`backend/data/`). Funciona igual e também mant
 > Com o `authGuard` (`CanActivateFn`), que verifica se existe um token válido e, se não existir, redireciona para `/login?returnUrl=...`. O `authInterceptor` adiciona o cabeçalho Bearer e trata o 401.
 
 **E o CORS?**
-> O backend libera a origem `http://localhost:4200` e o cabeçalho Authorization, configurável pela variável `CORS_ORIGEM`.
+> Em desenvolvimento, o Angular chama `/api` e o proxy do `ng serve` repassa para o backend, então o navegador nem precisa de CORS. Mesmo assim o backend libera a origem `http://localhost:4200` e o cabeçalho Authorization (configurável pela variável `CORS_ORIGEM`), o que permite publicar o frontend separado da API.
 
 **Por que o cadastro de usuário não é o CRUD principal?**
 > Porque o enunciado pede uma entidade do tema. O CRUD principal é o `Animal`; o cadastro de usuário existe só para criar contas de voluntário.
