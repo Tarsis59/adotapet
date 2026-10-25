@@ -1,0 +1,16 @@
+# IDE / SO
+.idea/
+*.iml
+.vscode/*
+!frontend/.vscode/
+.DS_Store
+Thumbs.db
+
+# Ambiente
+.env
+
+# Banco H2 local (perfil h2)
+backend/data/
+
+# Logs
+*.log
