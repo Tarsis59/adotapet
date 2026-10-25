@@ -73,6 +73,8 @@ export class RegistrarComponent {
 
   enviar(): void {
     this.erroBackend.set(null);
+    // Espaços colados antes/depois do e-mail não devem invalidar o formulário.
+    this.email.setValue(this.email.value.trim());
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
       return;
@@ -82,7 +84,7 @@ export class RegistrarComponent {
     const { nome, email, senha } = this.formulario.getRawValue();
 
     this.authService
-      .registrar(nome, email, senha)
+      .registrar(nome.trim(), email.trim(), senha)
       .pipe(finalize(() => this.carregando.set(false)))
       .subscribe({
         next: () => {

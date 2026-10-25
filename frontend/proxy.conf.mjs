@@ -7,5 +7,10 @@ export default {
     target: `http://localhost:${porta}`,
     secure: false,
     changeOrigin: true,
+    // A API é stateless (JWT no cabeçalho Authorization) e não usa cookies. Removê-los evita que
+    // cookies de outros projetos em "localhost" estourem o limite de cabeçalho do servidor (HTTP 400).
+    configure: (proxy) => {
+      proxy.on('proxyReq', (requisicaoProxy) => requisicaoProxy.removeHeader('cookie'));
+    },
   },
 };

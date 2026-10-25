@@ -73,6 +73,8 @@ export class LoginComponent {
 
   enviar(): void {
     this.erroBackend.set(null);
+    // Espaços colados antes/depois do e-mail não devem invalidar o formulário.
+    this.email.setValue(this.email.value.trim());
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
       return;
@@ -82,7 +84,7 @@ export class LoginComponent {
     const { email, senha } = this.formulario.getRawValue();
 
     this.authService
-      .login(email, senha)
+      .login(email.trim(), senha)
       .pipe(finalize(() => this.carregando.set(false)))
       .subscribe({
         next: () => {

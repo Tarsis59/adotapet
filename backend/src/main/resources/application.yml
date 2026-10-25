@@ -15,6 +15,9 @@ spring:
 
 server:
   port: 8080
+  # Navegadores de desenvolvimento acumulam muitos cookies em "localhost"; o padrão de 8 KB do Tomcat
+  # recusaria a requisição com 400 antes de chegar à aplicação.
+  max-http-request-header-size: 64KB
 
 adotapet:
   jwt:
