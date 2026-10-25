@@ -1,0 +1,28 @@
+<div class="container-pagina container-pagina--estreito">
+  <a routerLink="/animais" class="pagina-voltar">
+    <span aria-hidden="true">←</span> Voltar para a lista
+  </a>
+
+  @if (carregando()) {
+    <div class="estado-feedback" role="status">
+      <mat-spinner diameter="40" />
+      <p>Carregando dados do animal…</p>
+    </div>
+  } @else if (naoEncontrado()) {
+    <div class="estado-feedback" role="alert">
+      <p>Animal não encontrado.</p>
+    </div>
+  } @else if (animal(); as animalAtual) {
+    <h1>Editar {{ animalAtual.nome }}</h1>
+    <p class="pagina-subtitulo">Atualize os dados do animal e salve as alterações.</p>
+
+    <app-animal-form
+      [animal]="animalAtual"
+      [enviando]="enviando()"
+      [erroServidor]="errosServidor()"
+      textoEnviar="Salvar alterações"
+      [rotaCancelar]="'/animais/' + animalAtual.id"
+      (enviar)="salvar($event)"
+    />
+  }
+</div>

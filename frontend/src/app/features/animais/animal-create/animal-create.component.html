@@ -1,0 +1,15 @@
+<div class="container-pagina container-pagina--estreito">
+  <a routerLink="/animais" class="pagina-voltar">
+    <span aria-hidden="true">←</span> Voltar para a lista
+  </a>
+  <h1>Novo animal</h1>
+  <p class="pagina-subtitulo">Preencha os dados abaixo para cadastrar um animal para adoção.</p>
+
+  <app-animal-form
+    [enviando]="enviando()"
+    [erroServidor]="errosServidor()"
+    textoEnviar="Cadastrar animal"
+    rotaCancelar="/animais"
+    (enviar)="salvar($event)"
+  />
+</div>
