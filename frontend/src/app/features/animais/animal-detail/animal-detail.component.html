@@ -1,0 +1,104 @@
+<div class="container-pagina container-pagina--estreito">
+  <a routerLink="/animais" class="pagina-voltar">
+    <span aria-hidden="true">←</span> Voltar para a lista
+  </a>
+
+  @if (carregando()) {
+    <div class="estado-feedback" role="status">
+      <mat-spinner diameter="40" />
+      <p>Carregando dados do animal…</p>
+    </div>
+  } @else if (naoEncontrado()) {
+    <div class="estado-feedback" role="alert">
+      <span class="estado-feedback__emoji" aria-hidden="true">🐾</span>
+      <p>Animal não encontrado.</p>
+      <a mat-stroked-button routerLink="/animais">Voltar para a lista</a>
+    </div>
+  } @else if (animal(); as animalAtual) {
+    <article class="detalhe">
+      <div class="detalhe__midia" [class]="'detalhe__midia--' + animalAtual.especie.toLowerCase()">
+        <div class="detalhe__placeholder" aria-hidden="true">
+          {{ iconeEspecie[animalAtual.especie] }}
+        </div>
+        @if (animalAtual.fotoUrl && !erroFoto()) {
+          <img
+            [src]="animalAtual.fotoUrl"
+            [alt]="'Foto de ' + animalAtual.nome"
+            [class.carregada]="fotoCarregada()"
+            (load)="fotoCarregada.set(true)"
+            (error)="erroFoto.set(true)"
+          />
+        }
+      </div>
+
+      <div class="detalhe__corpo">
+        <div class="detalhe__cabecalho">
+          <div>
+            <h1>{{ animalAtual.nome }}</h1>
+            <p class="detalhe__subtitulo">
+              {{ especieLabels[animalAtual.especie] }}
+              @if (animalAtual.raca) {
+                · {{ animalAtual.raca }}
+              }
+            </p>
+          </div>
+          <span class="status-chip" [class]="statusChipClass[animalAtual.status]">
+            <span class="status-chip__ponto" aria-hidden="true"></span>
+            {{ statusLabels[animalAtual.status] }}
+          </span>
+        </div>
+
+        <dl class="detalhe__grade">
+          <div>
+            <dt>Sexo</dt>
+            <dd>{{ sexoLabels[animalAtual.sexo] }}</dd>
+          </div>
+          <div>
+            <dt>Porte</dt>
+            <dd>{{ porteLabels[animalAtual.porte] }}</dd>
+          </div>
+          <div>
+            <dt>Idade</dt>
+            <dd>{{ animalAtual.idadeAnos }} {{ animalAtual.idadeAnos === 1 ? 'ano' : 'anos' }}</dd>
+          </div>
+          <div>
+            <dt>Peso</dt>
+            <dd>{{ animalAtual.pesoKg ? ((animalAtual.pesoKg | number: '1.0-2') + ' kg') : 'Não informado' }}</dd>
+          </div>
+          <div>
+            <dt>Castrado</dt>
+            <dd>{{ animalAtual.castrado ? 'Sim' : 'Não' }}</dd>
+          </div>
+          <div>
+            <dt>Vacinado</dt>
+            <dd>{{ animalAtual.vacinado ? 'Sim' : 'Não' }}</dd>
+          </div>
+        </dl>
+
+        @if (animalAtual.descricao) {
+          <div class="detalhe__descricao">
+            <h2>Sobre {{ animalAtual.nome }}</h2>
+            <p>{{ animalAtual.descricao }}</p>
+          </div>
+        }
+
+        <div class="detalhe__metadados">
+          <span>Cadastrado em {{ animalAtual.criadoEm | date: "d 'de' MMMM 'de' y, HH:mm" }}</span>
+          <span>Atualizado em {{ animalAtual.atualizadoEm | date: "d 'de' MMMM 'de' y, HH:mm" }}</span>
+        </div>
+
+        <div class="detalhe__acoes">
+          <a mat-button type="button" routerLink="/animais">Voltar</a>
+          <a mat-stroked-button type="button" [routerLink]="['/animais', animalAtual.id, 'editar']">
+            <mat-icon aria-hidden="true">edit</mat-icon>
+            Editar
+          </a>
+          <button mat-flat-button type="button" color="warn" [disabled]="excluindo()" (click)="excluir()">
+            <mat-icon aria-hidden="true">delete</mat-icon>
+            Excluir
+          </button>
+        </div>
+      </div>
+    </article>
+  }
+</div>

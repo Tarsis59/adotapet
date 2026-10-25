@@ -1,0 +1,224 @@
+<div class="container-pagina">
+  <header class="lista__cabecalho">
+    <div>
+      <h1>Animais</h1>
+      <p class="lista__subtitulo">Acompanhe e gerencie os animais disponíveis para adoção.</p>
+    </div>
+    <a mat-flat-button color="primary" routerLink="/animais/novo" class="lista__botao-novo">
+      <mat-icon aria-hidden="true">add</mat-icon>
+      Novo animal
+    </a>
+  </header>
+
+  <section class="cartoes-estatistica" aria-label="Estatísticas de adoção">
+    <div class="cartao-estatistica">
+      <span class="cartao-estatistica__icone" aria-hidden="true">
+        <mat-icon>pets</mat-icon>
+      </span>
+      <div>
+        <p class="cartao-estatistica__valor">{{ estatisticas()?.total ?? '—' }}</p>
+        <p class="cartao-estatistica__rotulo">Total de animais</p>
+      </div>
+    </div>
+    <div class="cartao-estatistica cartao-estatistica--disponivel">
+      <span class="cartao-estatistica__icone" aria-hidden="true">
+        <mat-icon>favorite</mat-icon>
+      </span>
+      <div>
+        <p class="cartao-estatistica__valor">{{ estatisticas()?.disponiveis ?? '—' }}</p>
+        <p class="cartao-estatistica__rotulo">Disponíveis</p>
+      </div>
+    </div>
+    <div class="cartao-estatistica cartao-estatistica--processo">
+      <span class="cartao-estatistica__icone" aria-hidden="true">
+        <mat-icon>hourglass_top</mat-icon>
+      </span>
+      <div>
+        <p class="cartao-estatistica__valor">{{ estatisticas()?.emProcesso ?? '—' }}</p>
+        <p class="cartao-estatistica__rotulo">Em processo</p>
+      </div>
+    </div>
+    <div class="cartao-estatistica cartao-estatistica--adotado">
+      <span class="cartao-estatistica__icone" aria-hidden="true">
+        <mat-icon>home</mat-icon>
+      </span>
+      <div>
+        <p class="cartao-estatistica__valor">{{ estatisticas()?.adotados ?? '—' }}</p>
+        <p class="cartao-estatistica__rotulo">Adotados</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="filtros" aria-label="Filtros de busca">
+    <mat-form-field appearance="fill" class="filtros__busca">
+      <mat-label>Buscar por nome ou raça</mat-label>
+      <input matInput [formControl]="buscaControl" placeholder="Ex.: Bidu, Labrador…" />
+      <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="filtros__select">
+      <mat-label>Espécie</mat-label>
+      <mat-select [formControl]="especieControl">
+        <mat-option value="">Todas</mat-option>
+        @for (especie of especies; track especie) {
+          <mat-option [value]="especie">{{ especieLabels[especie] }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="filtros__select">
+      <mat-label>Status</mat-label>
+      <mat-select [formControl]="statusControl">
+        <mat-option value="">Todos</mat-option>
+        @for (status of statusOpcoes; track status) {
+          <mat-option [value]="status">{{ statusLabels[status] }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-button type="button" class="filtros__limpar" (click)="limparFiltros()">
+      <mat-icon aria-hidden="true">filter_alt_off</mat-icon>
+      Limpar filtros
+    </button>
+  </section>
+
+  @if (carregando()) {
+    <div class="estado-feedback" role="status">
+      <mat-spinner diameter="40" />
+      <p>Carregando animais…</p>
+    </div>
+  } @else if (erro()) {
+    <div class="estado-feedback" role="alert">
+      <mat-icon aria-hidden="true" class="estado-feedback__icone">error_outline</mat-icon>
+      <p>{{ erro() }}</p>
+      <button mat-stroked-button type="button" (click)="carregar()">Tentar novamente</button>
+    </div>
+  } @else if (animais().length === 0) {
+    <div class="estado-feedback" role="status">
+      <span class="estado-feedback__emoji" aria-hidden="true">🐾</span>
+      <p>Nenhum animal encontrado com os filtros atuais.</p>
+      <a mat-stroked-button routerLink="/animais/novo">Cadastrar o primeiro animal</a>
+    </div>
+  } @else {
+    <div class="lista__tabela-wrapper">
+      <table mat-table [dataSource]="animais()" class="lista__tabela">
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef scope="col">Nome</th>
+          <td mat-cell *matCellDef="let animal">
+            <div class="lista__nome-celula">
+            <span class="avatar-animal" aria-hidden="true">
+              <span class="avatar-animal__emoji">{{ iconeEspecie[animal.especie] }}</span>
+              @if (animal.fotoUrl) {
+                <img [src]="miniatura(animal.fotoUrl)" alt="" loading="lazy" (error)="$any($event.target).remove()" />
+              }
+            </span>
+            <a [routerLink]="['/animais', animal.id]" class="lista__link-nome">{{ animal.nome }}</a>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="especie">
+          <th mat-header-cell *matHeaderCellDef scope="col">Espécie</th>
+          <td mat-cell *matCellDef="let animal">{{ especieLabels[animal.especie] }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="raca">
+          <th mat-header-cell *matHeaderCellDef scope="col">Raça</th>
+          <td mat-cell *matCellDef="let animal">{{ animal.raca || '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="sexo">
+          <th mat-header-cell *matHeaderCellDef scope="col">Sexo</th>
+          <td mat-cell *matCellDef="let animal">{{ sexoLabels[animal.sexo] }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="porte">
+          <th mat-header-cell *matHeaderCellDef scope="col">Porte</th>
+          <td mat-cell *matCellDef="let animal">{{ porteLabels[animal.porte] }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="idade">
+          <th mat-header-cell *matHeaderCellDef scope="col">Idade</th>
+          <td mat-cell *matCellDef="let animal">{{ animal.idadeAnos }} {{ animal.idadeAnos === 1 ? 'ano' : 'anos' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef scope="col">Status</th>
+          <td mat-cell *matCellDef="let animal">
+            <span class="status-chip" [class]="statusChipClass[animal.status]">
+              <span class="status-chip__ponto" aria-hidden="true"></span>
+              {{ statusLabels[animal.status] }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef scope="col" class="lista__coluna-acoes">Ações</th>
+          <td mat-cell *matCellDef="let animal" class="lista__coluna-acoes">
+            <button mat-icon-button type="button" [attr.aria-label]="'Ver ' + animal.nome" matTooltip="Ver" (click)="ver(animal)">
+              <mat-icon aria-hidden="true">visibility</mat-icon>
+            </button>
+            <button mat-icon-button type="button" [attr.aria-label]="'Editar ' + animal.nome" matTooltip="Editar" (click)="editar(animal)">
+              <mat-icon aria-hidden="true">edit</mat-icon>
+            </button>
+            <button mat-icon-button type="button" color="warn" [attr.aria-label]="'Excluir ' + animal.nome" matTooltip="Excluir" (click)="excluir(animal)">
+              <mat-icon aria-hidden="true">delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunas"></tr>
+      </table>
+    </div>
+
+    <ul class="lista__cards" role="list">
+      @for (animal of animais(); track animal.id) {
+        <li class="cartao-animal">
+          <div class="cartao-animal__topo">
+            <div class="lista__nome-celula">
+            <span class="avatar-animal" aria-hidden="true">
+              <span class="avatar-animal__emoji">{{ iconeEspecie[animal.especie] }}</span>
+              @if (animal.fotoUrl) {
+                <img [src]="miniatura(animal.fotoUrl)" alt="" loading="lazy" (error)="$any($event.target).remove()" />
+              }
+            </span>
+            <a [routerLink]="['/animais', animal.id]" class="cartao-animal__nome">{{ animal.nome }}</a>
+            </div>
+            <span class="status-chip" [class]="statusChipClass[animal.status]">
+              <span class="status-chip__ponto" aria-hidden="true"></span>
+              {{ statusLabels[animal.status] }}
+            </span>
+          </div>
+          <dl class="cartao-animal__detalhes">
+            <div><dt>Espécie</dt><dd>{{ especieLabels[animal.especie] }}</dd></div>
+            <div><dt>Raça</dt><dd>{{ animal.raca || '—' }}</dd></div>
+            <div><dt>Sexo</dt><dd>{{ sexoLabels[animal.sexo] }}</dd></div>
+            <div><dt>Porte</dt><dd>{{ porteLabels[animal.porte] }}</dd></div>
+            <div><dt>Idade</dt><dd>{{ animal.idadeAnos }} {{ animal.idadeAnos === 1 ? 'ano' : 'anos' }}</dd></div>
+          </dl>
+          <div class="cartao-animal__acoes">
+            <button mat-stroked-button type="button" (click)="ver(animal)">
+              <mat-icon aria-hidden="true">visibility</mat-icon> Ver
+            </button>
+            <button mat-stroked-button type="button" (click)="editar(animal)">
+              <mat-icon aria-hidden="true">edit</mat-icon> Editar
+            </button>
+            <button mat-stroked-button type="button" color="warn" (click)="excluir(animal)">
+              <mat-icon aria-hidden="true">delete</mat-icon> Excluir
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+
+    <mat-paginator
+      [length]="totalElementos()"
+      [pageIndex]="pageIndex()"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      (page)="aoMudarPagina($event)"
+      aria-label="Paginação da lista de animais"
+    />
+  }
+</div>

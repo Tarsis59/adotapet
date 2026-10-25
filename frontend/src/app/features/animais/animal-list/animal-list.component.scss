@@ -1,0 +1,288 @@
+.lista__cabecalho {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+
+  h1 {
+    margin: 0 0 0.5rem;
+  }
+}
+
+.lista__subtitulo {
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.lista__botao-novo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 42px;
+}
+
+/* ---------- Cartões de estatística ---------- */
+.cartoes-estatistica {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cartao-estatistica {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--mat-sys-surface-container-low);
+  border-radius: 16px;
+  padding: 1rem 1.1rem;
+  box-shadow: var(--sombra-card);
+}
+
+.cartao-estatistica__icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--mat-sys-primary) 14%, transparent);
+  color: var(--mat-sys-primary);
+  flex-shrink: 0;
+}
+
+.cartao-estatistica--disponivel .cartao-estatistica__icone {
+  background: var(--cor-disponivel-bg);
+  color: var(--cor-disponivel);
+}
+.cartao-estatistica--processo .cartao-estatistica__icone {
+  background: var(--cor-processo-bg);
+  color: var(--cor-processo);
+}
+.cartao-estatistica--adotado .cartao-estatistica__icone {
+  background: var(--cor-adotado-bg);
+  color: var(--cor-adotado);
+}
+
+.cartao-estatistica__valor {
+  margin: 0;
+  font-family: 'Gloock', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.cartao-estatistica__rotulo {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+/* ---------- Filtros ---------- */
+.filtros {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.filtros__busca {
+  flex: 2 1 260px;
+}
+.filtros__select {
+  flex: 1 1 160px;
+}
+.filtros__limpar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 8px;
+}
+
+/* ---------- Estados de carregamento/erro/vazio ---------- */
+.estado-feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  color: var(--mat-sys-on-surface-variant);
+  background: var(--mat-sys-surface-container-low);
+  border-radius: 16px;
+}
+
+.estado-feedback__icone {
+  font-size: 2.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--mat-sys-error);
+}
+
+.estado-feedback__emoji {
+  font-size: 2.5rem;
+}
+
+/* ---------- Tabela (desktop) ---------- */
+.lista__tabela-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+  box-shadow: var(--sombra-card);
+  background: var(--mat-sys-surface-container-low);
+}
+
+.lista__tabela {
+  width: 100%;
+}
+
+.lista__link-nome {
+  font-weight: 600;
+  text-decoration: none;
+}
+.lista__link-nome:hover {
+  text-decoration: underline;
+}
+
+.lista__coluna-acoes {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.lista__cards {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+}
+
+/* ---------- Cards (mobile) ---------- */
+.cartao-animal {
+  background: var(--mat-sys-surface-container-low);
+  border-radius: 16px;
+  padding: 1rem 1.1rem;
+  box-shadow: var(--sombra-card);
+  margin-bottom: 1rem;
+}
+
+.cartao-animal__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.cartao-animal__nome {
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
+.cartao-animal__detalhes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem 1rem;
+  margin: 0 0 0.75rem;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
+    padding-bottom: 0.15rem;
+  }
+  dt {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.8125rem;
+  }
+  dd {
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+}
+
+.cartao-animal__acoes {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex: 1 1 auto;
+  }
+}
+
+mat-paginator {
+  margin-top: 0.75rem;
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .cartoes-estatistica {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 840px) {
+  .lista__tabela-wrapper {
+    display: none;
+  }
+  .lista__cards {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .lista__cabecalho {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cartao-estatistica {
+    padding: 0.85rem 0.9rem;
+  }
+  .filtros__busca,
+  .filtros__select {
+    flex: 1 1 100%;
+  }
+}
+
+/* ---------- Miniatura do animal ---------- */
+.lista__nome-celula {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.avatar-animal {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--mat-sys-surface-container-high);
+  box-shadow: 0 0 0 2px #fff, 0 1px 3px rgba(60, 35, 10, 0.18);
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.avatar-animal__emoji {
+  font-size: 1.25rem;
+  line-height: 1;
+}
