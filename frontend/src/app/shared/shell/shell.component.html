@@ -1,0 +1,30 @@
+<a class="pular-conteudo" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+<mat-toolbar class="shell__barra">
+  <a routerLink="/animais" class="shell__marca" aria-label="AdotaPet, página inicial">
+    <span class="shell__marca-icone" aria-hidden="true">🐾</span>
+    <span class="shell__marca-texto">AdotaPet</span>
+  </a>
+
+  <nav class="shell__nav" aria-label="Navegação principal">
+    <a routerLink="/animais" routerLinkActive="shell__link--ativo" class="shell__link">Animais</a>
+  </nav>
+
+  <span class="shell__espaco"></span>
+
+  @if (authService.usuario(); as usuario) {
+    <span class="shell__usuario" [title]="usuario.email">
+      <mat-icon aria-hidden="true">account_circle</mat-icon>
+      <span class="shell__usuario-nome">{{ usuario.nome }}</span>
+    </span>
+  }
+
+  <button mat-stroked-button type="button" class="shell__sair" (click)="sair()" aria-label="Sair do sistema">
+    <mat-icon aria-hidden="true">logout</mat-icon>
+    <span>Sair</span>
+  </button>
+</mat-toolbar>
+
+<main id="conteudo-principal" class="shell__conteudo" tabindex="-1">
+  <router-outlet />
+</main>

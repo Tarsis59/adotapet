@@ -1,0 +1,116 @@
+.pular-conteudo {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+
+  &:focus {
+    left: 0.5rem;
+    top: 0.5rem;
+  }
+}
+
+.shell__barra {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--mat-sys-on-surface) 10%, transparent);
+}
+
+.shell__marca {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--mat-sys-on-surface);
+  font-family: 'Gloock', serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.shell__marca-icone {
+  font-size: 1.4rem;
+}
+
+.shell__nav {
+  display: flex;
+  gap: 0.25rem;
+  font-family: 'Figtree', sans-serif;
+}
+
+.shell__link {
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--mat-sys-on-surface-variant);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--mat-sys-primary) 8%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+}
+
+.shell__link--ativo {
+  color: var(--mat-sys-primary);
+  background: color-mix(in srgb, var(--mat-sys-primary) 12%, transparent);
+}
+
+.shell__espaco {
+  flex: 1 1 auto;
+}
+
+.shell__usuario {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface-variant);
+  white-space: nowrap;
+
+  mat-icon {
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.shell__sair {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.shell__conteudo {
+  min-height: calc(100dvh - 64px);
+  outline: none;
+}
+
+@media (max-width: 599px) {
+  .shell__barra {
+    gap: 0.5rem;
+    padding-inline: 0.5rem;
+  }
+  .shell__usuario-nome {
+    display: none;
+  }
+  .shell__marca-texto {
+    display: none;
+  }
+}
