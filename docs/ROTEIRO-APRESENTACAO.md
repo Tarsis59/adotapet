@@ -37,7 +37,7 @@ docker compose up -d
 **Terminal 2, backend (API na porta 8080):**
 ```bash
 cd backend
-mvnw.cmd spring-boot:run        # no Windows
+.\mvnw.cmd spring-boot:run      # no Windows (PowerShell)
 ./mvnw spring-boot:run          # no Linux/Mac
 ```
 Espere aparecer `Started AdotapetApiApplication`. Na primeira vez o Maven baixa as dependências, o que leva de 2 a 5 minutos.
@@ -66,11 +66,11 @@ Espere aparecer `Local: http://localhost:4200/`.
 ### Plano B (sem Docker ou se a porta do banco estiver ocupada)
 ```bash
 cd backend
-mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=h2
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=h2"
 ```
 Usa o banco H2 salvo em arquivo (`backend/data/`). Funciona igual e também mantém os dados após reiniciar.
 
-> **Se a porta 8080 estiver ocupada:** suba o backend com `mvnw.cmd spring-boot:run "-Dspring-boot.run.arguments=--server.port=8081"` e o frontend com `$env:API_PORT = "8081"; npm start` (PowerShell) ou `set API_PORT=8081 && npm start` (cmd). O Swagger fica em `http://localhost:8081/swagger-ui.html`.
+> **Se a porta 8080 estiver ocupada:** suba o backend com `.\mvnw.cmd spring-boot:run "-Dspring-boot.run.arguments=--server.port=8081"` e o frontend com `$env:API_PORT = "8081"; npm start` (PowerShell) ou `set API_PORT=8081 && npm start` (cmd). O Swagger fica em `http://localhost:8081/swagger-ui.html`.
 >
 > **Se o `mvnw` der erro `PKIX path building failed`:** é o antivírus (ex.: Avast) inspecionando HTTPS. Rode uma vez `setx MAVEN_OPTS "-Djavax.net.ssl.trustStoreType=Windows-ROOT"`, feche e abra o terminal, e rode o `mvnw` de novo. No computador do Társis isso já está configurado.
 
@@ -142,7 +142,7 @@ Usa o banco H2 salvo em arquivo (`backend/data/`). Funciona igual e também mant
 ### Slide 13 · Requisitos atendidos (Guilherme)
 > "Aqui está o checklist do enunciado, todos os itens atendidos: as quatro páginas além do login, o login real no backend, serviços Angular, validação, mensagens, confirmação de exclusão, rotas protegidas, logout, o CRUD completo com camadas e DTOs, os códigos HTTP, o JPA com banco relacional, e o JWT com BCrypt."
 
-**Demonstração de persistência (Társis no computador):** no Terminal 2, pare o backend (**Ctrl+C**) e rode `mvnw.cmd spring-boot:run` de novo. Atualize a página (F5): os dados continuam lá.
+**Demonstração de persistência (Társis no computador):** no Terminal 2, pare o backend (**Ctrl+C**) e rode o mesmo comando de antes de novo (seta ↑ e Enter). Atualize a página (F5): os dados continuam lá.
 > "Reiniciamos o backend e os dados continuam salvos no PostgreSQL."
 
 ### Slide 14 · Qualidade (Ylo)

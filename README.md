@@ -99,14 +99,16 @@ Sobe o PostgreSQL 17 na porta **5434** (banco, usuário e senha: `adotapet`). Os
 ### 2. Backend (porta 8080)
 ```bash
 cd backend
-./mvnw spring-boot:run          # Windows: mvnw.cmd spring-boot:run
+./mvnw spring-boot:run          # Windows (PowerShell): .\mvnw.cmd spring-boot:run
 ```
 Na primeira execução são criados o usuário administrador e 8 animais de exemplo.
 
 > **Sem Docker?** Rode com o perfil H2, que salva os dados em arquivo (`backend/data/`) e também persiste após reiniciar:
 > ```bash
-> ./mvnw spring-boot:run -Dspring-boot.run.profiles=h2
+> ./mvnw spring-boot:run -Dspring-boot.run.profiles=h2            # Linux/macOS
+> .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=h2"     # Windows (PowerShell)
 > ```
+> No PowerShell, os argumentos `-D...` precisam de aspas.
 > Console do H2: http://localhost:8080/h2-console (JDBC URL `jdbc:h2:file:./data/adotapet`, usuário `sa`, sem senha).
 
 ### 3. Frontend (porta 4200)
