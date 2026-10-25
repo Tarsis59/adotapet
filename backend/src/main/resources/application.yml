@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: adotapet-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/adotapet}
+    username: ${DB_USERNAME:adotapet}
+    password: ${DB_PASSWORD:adotapet}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+
+server:
+  port: 8080
+
+adotapet:
+  jwt:
+    secret: ${JWT_SECRET:AdotaPet-Chave-Secreta-De-Desenvolvimento-Nao-Usar-Em-Producao-2026}
+    expiracao: PT2H
+  cors:
+    origem-permitida: ${CORS_ORIGEM:http://localhost:4200}
