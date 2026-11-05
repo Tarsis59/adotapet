@@ -28,7 +28,19 @@ git clone https://github.com/Tarsis59/adotapet.git
 cd adotapet
 ```
 
-### 1.3 Subir o sistema: 3 terminais
+### 1.3 Subir o sistema: um comando (Windows)
+Na pasta do projeto, num PowerShell:
+```powershell
+powershell -ExecutionPolicy Bypass -File .\apresentar.ps1 -ResetarDados
+```
+O script confere Java/Node/memória, sobe o PostgreSQL (ou o H2 se o Docker não estiver disponível), volta os animais para os 8 originais, abre o backend e o frontend em janelas próprias (**AdotaPet - Backend** e **AdotaPet - Frontend**), testa o login pela interface e abre uma janela anônima do Chrome com o sistema e o Swagger. Se a porta 8080 estiver ocupada, ele usa a 8081 e mostra a porta certa no final. Termina com **TUDO NO AR**; se algo der errado, para com **FALHOU:** e diz o motivo.
+
+- Demo de persistência: na janela **AdotaPet - Backend**, Ctrl+C, responda `S`, seta ↑ e Enter (ou digite `subir` e Enter).
+- Para derrubar tudo depois: `powershell -ExecutionPolicy Bypass -File .\apresentar.ps1 -Parar`
+
+Se preferir subir na mão, siga os 3 terminais abaixo.
+
+### 1.3.1 Subir o sistema na mão: 3 terminais
 **Terminal 1, banco de dados:**
 ```bash
 docker compose up -d

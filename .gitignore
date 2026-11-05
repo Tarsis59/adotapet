@@ -17,3 +17,6 @@ backend/data/
 
 # Arquivos temporários do Office (documento aberto)
 ~$*
+
+# Script de apresentacao (PIDs das janelas abertas)
+.apresentar.pids
