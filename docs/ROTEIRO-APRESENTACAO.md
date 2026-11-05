@@ -7,7 +7,7 @@
 | Integrante | Slides | Tempo aproximado |
 |---|---|---|
 | Társis Carvalho Barreto | 1, 2, 8 e 16 | 2 min 30 s |
-| Ylo Silva de Sá Bittencourt | 3, 4, 7 e 14 | 2 min 30 s |
+| Ylo Silva de Sá Bittencourt | 3, 4, 7, 14 e 15 | 3 min |
 | Guilherme Crocamo Freire | 5, 6 e 13 | 2 min 30 s |
 | Samuel Ferreira Santos | 9, 11 (detalhes) e 12 | 2 min |
 | João Pedro França Chaves Oliveira | 10 e 11 (edição) | 2 min |
@@ -57,6 +57,8 @@ Espere aparecer `Local: http://localhost:4200/`.
 4. DevTools (F12) na aba do sistema, na guia **Network**, filtrando por `api`.
 
 ### 1.5 Checklist rápido antes de começar
+- [ ] **Memória livre:** feche VS Code, outras janelas do Claude/terminais e abas do Chrome que não vão ser usadas. Com a RAM esgotada, o backend e o `npm start` caem com `insufficient memory` / `JavaScript heap out of memory` (isso aconteceu no ensaio de 04/11). No Gerenciador de Tarefas, deixe pelo menos **3 GB livres**.
+- [ ] **Dados limpos (recomendado):** se vocês ensaiaram antes e sobrou "Paçoca" ou faltou algum animal, zere o banco antes de subir o backend: `docker compose down -v` e depois `docker compose up -d`. O backend recria o admin e os 8 animais de exemplo.
 - [ ] `http://localhost:4200` abre a tela de login
 - [ ] O login com `admin@adotapet.com` / `Admin@123` funciona
 - [ ] A listagem mostra os animais de exemplo
@@ -70,6 +72,8 @@ cd backend
 ```
 Usa o banco H2 salvo em arquivo (`backend/data/`). Funciona igual e também mantém os dados após reiniciar.
 
+> **No notebook do Társis a porta 8080 está ocupada por um Apache (`httpd.exe`, serviço do Windows): use direto os comandos da porta 8081 abaixo.** Para saber se a porta está livre: `netstat -ano | findstr :8080`.
+>
 > **Se a porta 8080 estiver ocupada:** suba o backend com `.\mvnw.cmd spring-boot:run "-Dspring-boot.run.arguments=--server.port=8081"` e o frontend com `$env:API_PORT = "8081"; npm start` (PowerShell) ou `set API_PORT=8081 && npm start` (cmd). O Swagger fica em `http://localhost:8081/swagger-ui.html`.
 >
 > **Se o `mvnw` der erro `PKIX path building failed`:** é o antivírus (ex.: Avast) inspecionando HTTPS. Rode uma vez `setx MAVEN_OPTS "-Djavax.net.ssl.trustStoreType=Windows-ROOT"`, feche e abra o terminal, e rode o `mvnw` de novo. No computador do Társis isso já está configurado.
@@ -116,7 +120,7 @@ Usa o banco H2 salvo em arquivo (`backend/data/`). Funciona igual e também mant
 
 - Digite **"Luna"** na busca → a lista filtra.
 - Limpe e escolha **Espécie: Gato**, depois **Status: Disponível**.
-- Clique em **Limpar filtros** e mostre a **paginação** no rodapé.
+- Clique em **Limpar filtros**. No rodapé, mude **Itens por página** para **5**: aparece "1 – 5 de 8"; clique na seta **›** para ir à página 2 (com 10 por página os 8 animais cabem numa página só e a paginação não aparece na prática).
 > "A busca, os filtros e a paginação são feitos no servidor. A partir de cada linha é possível ver, editar ou excluir. O João vai mostrar o cadastro."
 
 ### Slide 10 · DEMO: Cadastro (João Pedro)
@@ -130,20 +134,22 @@ Usa o banco H2 salvo em arquivo (`backend/data/`). Funciona igual e também mant
 > "Esta é a página de detalhes, com todas as informações do registro: espécie, sexo, porte, idade, se é castrado e vacinado, a descrição e as datas de cadastro e de atualização."
 
 **João Pedro:** clique em **Editar**, mude o **Status para Adotado** e clique em **Salvar alterações**.
-> "Na edição o formulário já vem preenchido com os dados atuais. Mudei o status para Adotado e salvei: aparece a mensagem de sucesso e a data de atualização muda."
+> "Na edição o formulário já vem preenchido com os dados atuais. Mudei o status para Adotado e salvei: aparece a mensagem de sucesso e o Paçoca agora aparece como Adotado."
 
 ### Slide 12 · DEMO: Exclusão e responsividade (Samuel)
-- Clique em **Excluir** → aparece o diálogo de confirmação → clique em **Cancelar**.
-> "Antes de excluir, o sistema sempre pede confirmação. Se eu cancelar, nada acontece."
-- Clique em **Excluir** de novo → **Excluir** no diálogo.
-> "Confirmando, o registro é removido, aparece a mensagem de sucesso e voltamos para a listagem."
+- Ainda nos detalhes do **Paçoca**, clique em **Excluir** → aparece o diálogo de confirmação → clique em **Cancelar**.
+> "Antes de excluir, o sistema sempre pede confirmação. Se eu cancelar, nada acontece: o Paçoca continua aqui."
+- Clique em **Voltar para a lista**. Na linha do **Pingo**, clique no ícone de **lixeira** → **Excluir** no diálogo.
+> "Confirmando, o registro é removido do banco e aparece a mensagem de sucesso. A exclusão funciona tanto nos detalhes quanto direto na listagem."
+
+> **Por que excluir o Pingo e não o Paçoca?** Para a prova de persistência do slide 13 mostrar as três operações ao mesmo tempo: depois de reiniciar o backend, o Paçoca continua cadastrado **como Adotado** (cadastro e edição salvos) e o Pingo continua **excluído**. Se o Paçoca fosse excluído, a listagem depois do reinício seria igual à carga inicial e não provaria nada.
 - (Opcional) F12 → ícone de celular (Ctrl+Shift+M) para mostrar a **versão mobile**.
 
 ### Slide 13 · Requisitos atendidos (Guilherme)
 > "Aqui está o checklist do enunciado, todos os itens atendidos: as quatro páginas além do login, o login real no backend, serviços Angular, validação, mensagens, confirmação de exclusão, rotas protegidas, logout, o CRUD completo com camadas e DTOs, os códigos HTTP, o JPA com banco relacional, e o JWT com BCrypt."
 
-**Demonstração de persistência (Társis no computador):** no Terminal 2, pare o backend (**Ctrl+C**) e rode o mesmo comando de antes de novo (seta ↑ e Enter). Atualize a página (F5): os dados continuam lá.
-> "Reiniciamos o backend e os dados continuam salvos no PostgreSQL."
+**Demonstração de persistência (Társis no computador):** no Terminal 2, pare o backend (**Ctrl+C**) e rode o mesmo comando de antes de novo (seta ↑ e Enter). Espere `Started AdotapetApiApplication` (uns 15 segundos; o Guilherme pode ir falando o checklist enquanto isso) e atualize a página (F5).
+> "Reiniciamos o backend e os dados continuam salvos no PostgreSQL: o Paçoca que o João cadastrou continua aqui, como Adotado, e o Pingo que o Samuel excluiu não voltou."
 
 ### Slide 14 · Qualidade (Ylo)
 > "Para garantir que tudo funciona, escrevemos 28 testes automatizados no backend, entre testes unitários e testes de integração com MockMvc. Eles cobrem login, token inválido e expirado, o CRUD completo e os erros 400, 404 e 409. No frontend testamos o serviço de autenticação, o guard e o interceptor. Também validamos a persistência e deixamos o projeto fácil de rodar com três comandos."
@@ -152,6 +158,8 @@ Usa o banco H2 salvo em arquivo (`backend/data/`). Funciona igual e também mant
 > "Esta é a divisão do trabalho: o Társis cuidou da infraestrutura, da integração e da autenticação no frontend; eu fiquei com a segurança, ou seja, Spring Security, JWT e BCrypt; o Guilherme com as entidades, o CRUD, os DTOs e o tratamento de erros; o Samuel com a listagem, os detalhes e a exclusão; e o João Pedro com o cadastro, a edição e os formulários."
 
 ### Slide 16 · Encerramento (Társis)
+> **Atenção:** o texto pequeno deste slide diz "Agora, a demonstração ao vivo", mas a demo já aconteceu. Não leia esse texto; fale "como vocês viram na demonstração".
+
 - No sistema, clique em **Sair** → volta para o login.
 > "E para fechar, o botão Sair encerra a sessão e remove o token. O código está no GitHub, no link do slide, com o README explicando como rodar. Obrigado! Ficamos à disposição para perguntas."
 
@@ -182,6 +190,9 @@ Usa o banco H2 salvo em arquivo (`backend/data/`). Funciona igual e também mant
 
 **E o CORS?**
 > Em desenvolvimento, o Angular chama `/api` e o proxy do `ng serve` repassa para o backend, então o navegador nem precisa de CORS. Mesmo assim o backend libera a origem `http://localhost:4200` e o cabeçalho Authorization (configurável pela variável `CORS_ORIGEM`), o que permite publicar o frontend separado da API.
+
+**"Mostra o token inválido funcionando."** (Társis, no computador)
+> F12 → **Application** → **Local Storage** → `http://localhost:4200` → na chave `adotapet_token`, apague a última letra do valor → F5. A listagem chama a API, o backend responde 401 *"Token inválido."* (dá para mostrar na aba Network) e o Angular faz logout, voltando para o login com o aviso *"Sua sessão expirou ou é inválida. Entre novamente."* O token expirado não dá para mostrar ao vivo (são 2 horas), mas está coberto pelo teste `AnimalControllerIT` e pelo logout automático agendado no `AuthService`.
 
 **Por que o cadastro de usuário não é o CRUD principal?**
 > Porque o enunciado pede uma entidade do tema. O CRUD principal é o `Animal`; o cadastro de usuário existe só para criar contas de voluntário.
